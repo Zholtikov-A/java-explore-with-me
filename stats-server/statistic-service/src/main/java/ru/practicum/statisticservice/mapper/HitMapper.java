@@ -13,7 +13,6 @@ public class HitMapper {
 
     public Hit toHit(EndpointHit endpointHit) {
 
-
         return Hit.builder()
                 .app(endpointHit.getApp())
                 .created(LocalDateTime.parse(endpointHit.getTimestamp(), formatter))

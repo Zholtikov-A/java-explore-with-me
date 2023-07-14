@@ -28,15 +28,15 @@ public class StatsController {
                                     @RequestParam(name = "unique", defaultValue = "false") Boolean unique,
                                     @RequestParam(name = "uris", required = false) List<String> uris
     ) {
-        log.info("Получен запрос к эндпоинту \"/stats\" getStats");
+        log.info("Get request to endpoint \"/stats\" getStats");
         return statService.getStats(start, end, unique, uris);
     }
 
     @PostMapping("/hit")
     public ResponseEntity<String> createInfo(@RequestBody @Valid EndpointHit endpointHit) {
-        log.info("Получен запрос к эндпоинту \"/hit\" create");
+        log.info("Get request to endpoint \"/hit\" create");
         statService.create(endpointHit);
-        return new ResponseEntity<>("Информация сохранена", HttpStatus.CREATED);
+        return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
 
