@@ -32,9 +32,9 @@ public class StatsController {
         return statService.getStats(start, end, unique, uris);
     }
 
-    @PostMapping("/hits")
+    @PostMapping("/hit")
     public ResponseEntity<String> createInfo(@RequestBody @Valid EndpointHit endpointHit) {
-        log.info("Получен запрос к эндпоинту \"/hits\" create");
+        log.info("Получен запрос к эндпоинту \"/hit\" create");
         statService.create(endpointHit);
         return new ResponseEntity<>("Информация сохранена", HttpStatus.CREATED);
     }
