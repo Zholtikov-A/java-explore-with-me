@@ -15,7 +15,7 @@ public class HitMapper {
 
         return Hit.builder()
                 .app(endpointHit.getApp())
-                .created(LocalDateTime.parse(endpointHit.getTimestamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .created(LocalDateTime.parse(endpointHit.getTimestamp(), formatter))
                 .uri(endpointHit.getUri())
                 .ip(endpointHit.getIp())
                 .build();

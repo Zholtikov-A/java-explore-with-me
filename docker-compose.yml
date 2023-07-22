@@ -9,7 +9,7 @@ services:
     depends_on:
       - stats-postgres-db
     environment:
-      - EXPLORE_MAIN_URL=http://main:8080
+      - EXPLORE_MAIN_URL=http://ewm-service:8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-postgres-db:5432/stats-postgres
 
   stats-postgres-db:
@@ -34,7 +34,7 @@ services:
     depends_on:
       - ewm-postgres-db
     environment:
-      - EXPLORE_MAIN_URL=http://main:8080
+      - EXPLORE_MAIN_URL=http://ewm-service:8080
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-postgres-db:5432/ewm-postgres
 
   ewm-postgres-db:
