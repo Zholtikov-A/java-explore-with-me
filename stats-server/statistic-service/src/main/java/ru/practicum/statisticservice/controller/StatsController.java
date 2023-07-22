@@ -26,17 +26,17 @@ public class StatsController {
     public List<ViewStats> getStats(@RequestParam(name = "start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
                                     @RequestParam(name = "end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
                                     @RequestParam(name = "unique", defaultValue = "false") Boolean unique,
-                                    @RequestParam(name = "uris", required = false) List<String> uris
+                                    @RequestParam(name = "uris", required = false) String[] uris
     ) {
         log.info("Get request to endpoint \"/stats\" getStats");
         return statService.getStats(start, end, unique, uris);
     }
 
     @PostMapping("/hit")
-    public ResponseEntity<String> createInfo(@RequestBody @Valid EndpointHit endpointHit) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public EndpointHit createInfo(@RequestBody @Valid EndpointHit endpointHit) {
         log.info("Get request to endpoint \"/hit\" create");
-        statService.create(endpointHit);
-        return new ResponseEntity<>("Created", HttpStatus.CREATED);
+        return statService.create(endpointHit);
     }
 
 

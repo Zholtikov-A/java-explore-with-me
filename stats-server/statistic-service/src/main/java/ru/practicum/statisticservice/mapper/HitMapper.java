@@ -16,8 +16,20 @@ public class HitMapper {
         return Hit.builder()
                 .app(endpointHit.getApp())
                 .created(LocalDateTime.parse(endpointHit.getTimestamp(), formatter))
+             //   .created(LocalDateTime.parse(endpointHit.getTimestamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .uri(endpointHit.getUri())
                 .ip(endpointHit.getIp())
                 .build();
     }
+
+    public EndpointHit toHitDto(Hit hit) {
+        return EndpointHit.builder()
+                .id(hit.getId())
+                .app(hit.getApp())
+                .ip(hit.getIp())
+                .uri(hit.getUri())
+                .timestamp(hit.getCreated().toString())
+                .build();
+    }
+
 }

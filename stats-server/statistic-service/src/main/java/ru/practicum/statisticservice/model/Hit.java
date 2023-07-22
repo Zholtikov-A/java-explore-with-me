@@ -18,13 +18,13 @@ public class Hit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "hit_id")
     private Long id;
-    @Column(name = "app")
+
     private String app;
-    @Column(name = "uri")
+
     private String uri;
-    @Column(name = "ip")
+
     private String ip;
-    @Column(name = "created")
+
     private LocalDateTime created;
 
 }
