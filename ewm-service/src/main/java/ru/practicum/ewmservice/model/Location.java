@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 /**
  * Широта и долгота места проведения события
- * */
+ */
 
 @Data
 @Builder

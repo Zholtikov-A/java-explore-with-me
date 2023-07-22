@@ -3,12 +3,12 @@ package ru.practicum.ewmservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
-import ru.practicum.ewmservice.model.User;
-import ru.practicum.ewmservice.repository.UserRepository;
 import ru.practicum.ewmservice.dto.NewUserRequest;
 import ru.practicum.ewmservice.dto.UserDto;
+import ru.practicum.ewmservice.exceptions.ValidationIdException;
 import ru.practicum.ewmservice.mapper.UserMapper;
+import ru.practicum.ewmservice.model.User;
+import ru.practicum.ewmservice.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

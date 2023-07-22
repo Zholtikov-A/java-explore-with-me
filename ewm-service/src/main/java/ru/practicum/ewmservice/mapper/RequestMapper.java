@@ -1,8 +1,8 @@
 package ru.practicum.ewmservice.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.ewmservice.model.Request;
 import ru.practicum.ewmservice.dto.ParticipationRequestDto;
+import ru.practicum.ewmservice.model.Request;
 
 import java.time.LocalDateTime;
 

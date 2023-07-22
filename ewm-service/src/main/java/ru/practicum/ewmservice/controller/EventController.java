@@ -5,10 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmservice.dto.EventFullDto;
+import ru.practicum.ewmservice.dto.EventShortDto;
 import ru.practicum.ewmservice.enums.StateSort;
 import ru.practicum.ewmservice.service.EventService;
-import ru.practicum.ewmservice.dto.EventShortDto;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;

@@ -25,7 +25,6 @@ import ru.practicum.ewmservice.model.User;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
-
 import ru.practicum.statisticclient.StatsClient;
 import ru.practicum.statisticdto.EndpointHit;
 import ru.practicum.statisticdto.ViewStats;

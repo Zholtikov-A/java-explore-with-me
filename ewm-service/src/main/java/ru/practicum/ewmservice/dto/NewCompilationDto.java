@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * Подборка событий
- * */
+ */
 
 @Data
 @Builder

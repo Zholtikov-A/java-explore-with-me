@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Результат подтверждения/отклонения заявок на участие в событии
- * */
+ */
 @Data
 @Builder
 @AllArgsConstructor

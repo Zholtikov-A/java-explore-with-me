@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Изменение информации о подборке событий.
  * Если поле в запросе не указано (равно null) - значит изменение этих данных не треубется.
- * */
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,7 +20,7 @@ public class UpdateCompilationRequest {
 
     /**
      * Список id событий подборки для полной замены текущего списка
-     * */
+     */
     private Set<Long> events;
 
     private Boolean pinned;

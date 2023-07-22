@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Данные для добавления новой категории
- * */
+ */
 @Data
 @Builder
 @AllArgsConstructor
