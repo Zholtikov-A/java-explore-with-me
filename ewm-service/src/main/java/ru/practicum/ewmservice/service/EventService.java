@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import ru.practicum.ewmservice.dto.*;
 import ru.practicum.ewmservice.enums.StateAction;
 import ru.practicum.ewmservice.enums.StateSort;
+import ru.practicum.ewmservice.enums.StatusEventRequest;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 import ru.practicum.ewmservice.exceptions.BadRequestException;
 import ru.practicum.ewmservice.exceptions.ConflictException;
@@ -68,11 +69,11 @@ public class EventService {
         long hoursDifference = ChronoUnit.HOURS.between(created, eventDto.getEventDate());
 
         if (hoursDifference < MINIMUM_HOURS_FOR_CREATE_EVENT) {
-            throw new BadRequestException("Должно содержать дату, которая еще не наступила");
+            throw new BadRequestException("Must contain future date");
         }
 
         Category category = categoryRepository.findById(eventDto.getCategory())
-                .orElseThrow(() -> new ValidationIdException("Категория с id=" + eventDto.getCategory() + ", не найдена"));
+                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + eventDto.getCategory() + "\" not found"));
 
         User initiator = userService.checkUser(userId);
         Location location = locationRepository.save(eventDto.getLocation());
@@ -153,18 +154,18 @@ public class EventService {
         if (adminRequest.getEventDate() != null) {
             long hoursDifference = ChronoUnit.HOURS.between(currentTime, adminRequest.getEventDate());
             if (adminRequest.getEventDate().isBefore(currentTime)) {
-                throw new BadRequestException("Дата начала изменяемого события должна быть в будущем");
+                throw new BadRequestException("Event start time must be in the future.");
             }
 
             if (hoursDifference < MINIMUM_HOURS_FOR_CREATE_EVENT_WHEN_UPDATE_ADMIN) {
-                throw new ConflictException("Дата начала изменяемого события должна быть не ранее чем за час от даты публикации");
+                throw new ConflictException("Event start time must be more then one hour early then publication date.");
             }
         }
 
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new ValidationIdException("Event with id=" + eventId + " was not found"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new ValidationIdException("Event with id = \"" + eventId + "\" was not found"));
 
         if (event.getState() != StatusParticipation.PENDING) {
-            throw new ConflictException("Событие можно публиковать, только если оно в состоянии ожидания публикации, текущее состояние: " + event.getState());
+            throw new ConflictException("Only event in status " + StatusEventRequest.PENDING + " can be publish. Current status: " + event.getState());
         }
 
 
@@ -183,7 +184,7 @@ public class EventService {
     public Event checkEvent(Long eventId, Long userId) {
         Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
         if (event == null) {
-            throw new ValidationIdException("Event with id=" + eventId + " was not found");
+            throw new ValidationIdException("Event with id=" + eventId + " not found");
         }
         return event;
     }
@@ -191,7 +192,7 @@ public class EventService {
     public EventFullDto getEventsById(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findByIdAndState(eventId, StatusParticipation.PUBLISHED);
         if (event == null) {
-            throw new ValidationIdException("Event with id=" + eventId + " was not found");
+            throw new ValidationIdException("Event with id=" + eventId + " not found");
         }
 
         Integer oldCountHit = getCountUniqueViews(request);
@@ -225,7 +226,7 @@ public class EventService {
         }
 
         if (rangeStart.isAfter(rangeEnd)) {
-            throw new BadRequestException("Дата начала сортировки должна быть ранне конца сортировки");
+            throw new BadRequestException("Sorting start can't be after end time.");
         }
 
         LocalDateTime finalRangeStart = rangeStart;
@@ -279,17 +280,6 @@ public class EventService {
                 uris);
         return response.size();
     }
-
-    /**
-     * Метод, getNullPropertyNames, который возвращает имена свойств, значение которых в объекте равно null. Это достигается с помощью:
-     * Получения всех свойств объекта с помощью BeanUtils.getPropertyDescriptors
-     * Использования Stream API для обработки свойств
-     * Использования ReflectionUtils.findMethod и ReflectionUtils.invokeMethod для проверки, равно ли значение свойства null
-     * Конвертирования Stream подходящих свойств в массив строк
-     * Затем передается этот массив как третий аргумент в copyProperties.
-     * Это аргумент varargs, который позволяет задать 'имена свойств, которые должны быть игнорированы'. Таким образом, все свойства с именами,
-     * которые возвращает getNullPropertyNames, не будут скопированы в целевой бин.
-     */
 
     private static String[] getNullPropertyNames(Object source) {
 

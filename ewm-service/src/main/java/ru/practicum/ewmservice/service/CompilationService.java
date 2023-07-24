@@ -40,13 +40,13 @@ public class CompilationService {
 
     public void delete(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new ValidationIdException("Compilation with id=" + compId + " was not found"));
+                .orElseThrow(() -> new ValidationIdException("Compilation with id = \"" + compId + "\" not found"));
         compilationRepository.delete(compilation);
     }
 
     public CompilationDto update(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new ValidationIdException("Compilation with id=" + compId + " was not found"));
+                .orElseThrow(() -> new ValidationIdException("Compilation with id = \"" + compId + "\" not found"));
 
         if (updateCompilationRequest.getTitle() != null) {
             compilation.setTitle(updateCompilationRequest.getTitle());
@@ -85,7 +85,7 @@ public class CompilationService {
 
     public CompilationDto getById(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new ValidationIdException("Compilation with id=" + compId + " was not found"));
+                .orElseThrow(() -> new ValidationIdException("Compilation with id = \"" + compId + "\" not found"));
         List<EventShortDto> eventShortDtoList = compilation.getEvents()
                 .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
         return CompilationMapper.toCompilationDto(compilation, eventShortDtoList);

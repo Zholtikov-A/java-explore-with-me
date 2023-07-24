@@ -47,13 +47,13 @@ public class CategoryService {
 
     public Category checkCategory(Long catId) {
         return categoryRepository.findById(catId)
-                .orElseThrow(() -> new ValidationIdException("Категория с id=" + catId + ", не найдена"));
+                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + catId + "\" not found"));
     }
 
     private void checkEvent(Long catId) {
         Event event = eventService.findEventByCategoryId(catId);
         if (event != null) {
-            log.warn("Ошибка Категория с ID = {}, не пустая", catId);
+            log.warn("ERROR! Category with id = {} is not empty", catId);
             throw new DataIntegrityViolationException("The category is not empty");
         }
     }
