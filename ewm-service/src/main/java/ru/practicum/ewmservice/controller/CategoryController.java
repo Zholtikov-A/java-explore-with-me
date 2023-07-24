@@ -21,13 +21,13 @@ public class CategoryController {
     @GetMapping
     public List<CategoryDto> get(@RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                  @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Получен запрос к эндпоинту: /categories get");
+        log.info("Get request to endpoint: GET \"/categories\" get");
         return categoryService.get(from, size);
     }
 
     @GetMapping("/{catId}")
     public CategoryDto getById(@PathVariable @Positive Long catId) {
-        log.info("Получен запрос к эндпоинту: /categories/{catId} getById c ID = {}", catId);
+        log.info("Get request to endpoint: GET \"/categories/{catId}\" getById id = {}", catId);
         return categoryService.getById(catId);
     }
 }

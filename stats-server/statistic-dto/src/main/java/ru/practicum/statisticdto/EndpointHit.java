@@ -1,9 +1,7 @@
 package ru.practicum.statisticdto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
 
@@ -11,18 +9,19 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EndpointHit {
-    private Long id;
+    Long id;
 
     @NotBlank(message = "app не может быть пустым")
-    private String app;
+    String app;
 
     @NotBlank(message = "uri не может быть пустым")
-    private String uri;
+    String uri;
 
     @NotBlank(message = "ip не может быть пустым")
-    private String ip;
+    String ip;
 
     @NotBlank(message = "timestamp не может быть пустым")
-    private String timestamp;
+    String timestamp;
 }

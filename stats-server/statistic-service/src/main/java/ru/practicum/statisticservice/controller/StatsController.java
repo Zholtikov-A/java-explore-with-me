@@ -27,14 +27,14 @@ public class StatsController {
                                     @RequestParam(name = "unique", defaultValue = "false") boolean unique,
                                     @RequestParam(name = "uris", required = false) String[] uris
     ) {
-        log.info("Get request to endpoint \"/stats\" getStats");
+        log.info("Get request to endpoint: GET \"/stats\" getStats");
         return statService.getStats(start, end, unique, uris);
     }
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public EndpointHit createInfo(@RequestBody @Valid EndpointHit endpointHit) {
-        log.info("Get request to endpoint \"/hit\" create");
+        log.info("Get request to endpoint: POST \"/hit\" create");
         return statService.create(endpointHit);
     }
 

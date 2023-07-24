@@ -34,21 +34,21 @@ public class AdminController {
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody @Valid NewCategoryDto category) {
-        log.info("Получен запрос к эндпоинту: admin/categories createCategory {}", category);
+        log.info("Get request to endpoint POST \"admin/categories\" createCategory {}", category);
         return categoryService.createCategory(category);
     }
 
     @DeleteMapping("/categories/{catId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable @Positive Long catId) {
-        log.info("Получен запрос к эндпоинту: admin/categories deleteCategory");
+        log.info("Get request to endpoint: DELETE \"admin/categories/{catId}\" deleteCategory, id = {}", catId);
         categoryService.deleteCategory(catId);
     }
 
     @PatchMapping("/categories/{catId}")
     public CategoryDto updateCategory(@PathVariable @Positive Long catId,
                                       @RequestBody @Valid NewCategoryDto categoryDto) {
-        log.info("Получен запрос к эндпоинту: admin/categories/{catId} updateCategory, id = {}", catId);
+        log.info("Get request to endpoint: PATCH \"admin/categories/{catId}\" updateCategory, id = {}", catId);
         return categoryService.updateCategory(categoryDto, catId);
     }
 
@@ -60,14 +60,14 @@ public class AdminController {
                                              @RequestParam(name = "rangeEnd", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                              @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                              @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Получен запрос к эндпоинту: admin/events getEvents");
+        log.info("Get request to endpoint: GET \"admin/events\" getEventsAdmin");
         return eventService.getEventsAdmin(users, status, categories, rangeStart, rangeEnd, from, size);
     }
 
     @PatchMapping("/events/{eventId}")
     public EventFullDto updateEventAndStatus(@PathVariable @Positive Long eventId,
                                              @RequestBody @Validated UpdateEventAdminRequest adminRequest) {
-        log.info("Получен запрос к эндпоинту: admin/events updateEventAndStatus, с id={}", eventId);
+        log.info("Get request to endpoint: PATCH \"admin/events/{eventId}\" updateEventAndStatus, id = {}", eventId);
         return eventService.updateEventAndStatus(eventId, adminRequest);
     }
 
@@ -75,7 +75,7 @@ public class AdminController {
     public List<UserDto> getUsers(@RequestParam(name = "ids", required = false) List<Long> ids,
                                   @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                   @RequestParam(name = "size", defaultValue = "10") @Positive Integer size) {
-        log.info("Получен запрос к эндпоинту: admin/users getUsers");
+        log.info("Get request to endpoint: GET \"admin/users\" getUsers");
         return userService.getUsers(ids, from, size);
     }
 
@@ -83,35 +83,35 @@ public class AdminController {
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody @Valid NewUserRequest userRequest) {
-        log.info("Получен запрос к эндпоинту: admin/users createUser");
+        log.info("Get request to endpoint: POST \"admin/users\" createUser");
         return userService.createUser(userRequest);
     }
 
     @DeleteMapping("/users/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable @Positive Long userId) {
-        log.info("Получен запрос к эндпоинту: admin/users deleteUser");
+        log.info("Get request to endpoint: DELETE \"admin/users\" deleteUser, id = {}", userId);
         userService.deleteUser(userId);
     }
 
     @PostMapping("/compilations")
     @ResponseStatus(HttpStatus.CREATED)
     public CompilationDto createCompilation(@RequestBody @Valid NewCompilationDto newCompilationDto) {
-        log.info("Получен запрос к эндпоинту: admin/compilations createCompilation");
+        log.info("Get request to endpoint: POST \"admin/compilations\" createCompilation");
         return compilationService.create(newCompilationDto);
     }
 
     @DeleteMapping("/compilations/{compId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompilation(@PathVariable @Positive Long compId) {
-        log.info("Получен запрос к эндпоинту: admin/compilations/{compId} deleteCompilation");
+        log.info("Get request to endpoint: DELETE \"admin/compilations/{compId}\" deleteCompilation, id = {}", compId);
         compilationService.delete(compId);
     }
 
     @PatchMapping("/compilations/{compId}")
     public CompilationDto updateCompilation(@PathVariable @Positive Long compId,
                                             @RequestBody @Valid UpdateCompilationRequest updateCompilationRequest) {
-        log.info("Получен запрос к эндпоинту: admin/compilations/{compId} updateCompilation c compId={}", compId);
+        log.info("Get request to endpoint: PATCH \"admin/compilations/{compId}\" updateCompilation id = {}", compId);
         return compilationService.update(compId, updateCompilationRequest);
     }
 

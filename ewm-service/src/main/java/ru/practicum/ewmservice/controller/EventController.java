@@ -34,14 +34,14 @@ public class EventController {
                                          @RequestParam(name = "from", defaultValue = "0") @PositiveOrZero Integer from,
                                          @RequestParam(name = "size", defaultValue = "10") @Positive Integer size,
                                          HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: /events getEvents");
+        log.info("Get request to endpoint GET \"/events\" getEvents");
         return eventService.getEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
     }
 
     @GetMapping("/{eventId}")
     public EventFullDto getEventsById(@PathVariable @Positive Long eventId,
                                       HttpServletRequest request) {
-        log.info("Получен запрос к эндпоинту: /events/{eventId} getEventsById c Id={}", eventId);
+        log.info("Get request to endpoint: GET \"/events/{eventId}\" getEventsById id = {}", eventId);
         return eventService.getEventsById(eventId, request);
     }
 }
