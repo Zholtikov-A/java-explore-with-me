@@ -1,67 +1,67 @@
 package ru.practicum.ewmservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "events")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
-    private Long id;
+    Long id;
 
-    private String annotation;
+    String annotation;
 
     @ManyToOne
     @JoinColumn(name = "category", referencedColumnName = "category_id")
-    private Category category;
+    Category category;
 
     @JoinColumn(name = "confirmed_requests")
-    private Integer confirmedRequests;
+    Integer confirmedRequests;
 
     @JoinColumn(name = "created_on")
-    private LocalDateTime createdOn;
+    LocalDateTime createdOn;
 
-    private String description;
+    String description;
 
     @JoinColumn(name = "event_date")
-    private LocalDateTime eventDate;
+    LocalDateTime eventDate;
 
     @ManyToOne
     @JoinColumn(name = "initiator", referencedColumnName = "user_id")
-    private User initiator;
+    User initiator;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location", referencedColumnName = "location_id")
-    private Location location;
+    Location location;
 
-    private Boolean paid;
+    Boolean paid;
 
     @JoinColumn(name = "participant_limit")
-    private Integer participantLimit;
+    Integer participantLimit;
 
     @JoinColumn(name = "published_on")
-    private LocalDateTime publishedOn;
+    LocalDateTime publishedOn;
 
     @JoinColumn(name = "request_moderation")
-    private Boolean requestModeration;
+    Boolean requestModeration;
 
     @Enumerated(value = EnumType.STRING)
-    private StatusParticipation state;
+    StatusParticipation state;
 
-    private String title;
+    String title;
 
-    private Integer views;
+    Integer views;
 }

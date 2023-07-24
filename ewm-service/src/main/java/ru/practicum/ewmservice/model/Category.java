@@ -1,24 +1,24 @@
 package ru.practicum.ewmservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Long id;
+    Long id;
 
     @Column(name = "category_name")
-    private String name;
+    String name;
 }

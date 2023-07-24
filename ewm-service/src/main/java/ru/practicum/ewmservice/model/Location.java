@@ -1,30 +1,26 @@
 package ru.practicum.ewmservice.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
-/**
- * Широта и долгота места проведения события
- */
-
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "locations")
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "location_id")
-    private Long id;
+    Long id;
 
-    private Float lat;
+    Float lat;
 
-    private Float lon;
+    Float lon;
 }
