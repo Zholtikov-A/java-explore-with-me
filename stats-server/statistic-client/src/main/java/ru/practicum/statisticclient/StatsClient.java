@@ -45,8 +45,7 @@ public class StatsClient {
 
         ResponseEntity<List<ViewStats>> serverResponse = rest.exchange(path, HttpMethod.GET, null, new ParameterizedTypeReference<>() {
         }, parameters);
-        List<ViewStats> viewStatsList = serverResponse.getBody();
-        return viewStatsList;
+        return serverResponse.getBody();
     }
 
     public void createInfo(EndpointHit endpointHit) {

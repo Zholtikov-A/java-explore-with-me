@@ -1,9 +1,9 @@
 package ru.practicum.ewmservice.mapper;
 
 import lombok.experimental.UtilityClass;
+import ru.practicum.ewmservice.dto.CompilationCreateDto;
 import ru.practicum.ewmservice.dto.CompilationDto;
 import ru.practicum.ewmservice.dto.EventShortDto;
-import ru.practicum.ewmservice.dto.CompilationCreateDto;
 import ru.practicum.ewmservice.model.Compilation;
 import ru.practicum.ewmservice.model.Event;
 

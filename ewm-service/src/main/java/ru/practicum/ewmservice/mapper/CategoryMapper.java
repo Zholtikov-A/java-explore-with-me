@@ -1,8 +1,8 @@
 package ru.practicum.ewmservice.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.ewmservice.dto.CategoryDto;
 import ru.practicum.ewmservice.dto.CategoryCreateDto;
+import ru.practicum.ewmservice.dto.CategoryDto;
 import ru.practicum.ewmservice.model.Category;
 
 @UtilityClass
