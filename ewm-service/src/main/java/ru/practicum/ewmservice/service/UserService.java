@@ -44,6 +44,6 @@ public class UserService {
     }
 
     public User checkUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new ValidationIdException("Пользователь с id=" + userId + ", не найден"));
+        return userRepository.findById(userId).orElseThrow(() -> new ValidationIdException("User with id = " + userId + " not found"));
     }
 }
