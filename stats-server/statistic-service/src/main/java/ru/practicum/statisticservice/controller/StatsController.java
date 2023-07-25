@@ -22,10 +22,10 @@ public class StatsController {
     private final StatService statService;
 
     @GetMapping("/stats")
-    public List<ViewStats> getStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                    @RequestParam(defaultValue = "false") boolean unique,
-                                    @RequestParam(required = false) String[] uris
+    public List<ViewStats> getStats(@RequestParam(name = "start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                    @RequestParam(name = "end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                                    @RequestParam(name = "unique", defaultValue = "false") boolean unique,
+                                    @RequestParam(name = "uris", required = false) String[] uris
     ) {
         log.info("Get request to endpoint: GET \"/stats\" getStats");
         return statService.getStats(start, end, unique, uris);
