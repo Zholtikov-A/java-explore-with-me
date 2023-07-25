@@ -13,15 +13,15 @@ import javax.validation.constraints.NotBlank;
 public class EndpointHit {
     Long id;
 
-    @NotBlank(message = "app не может быть пустым")
+    @NotBlank(message = "app can't be empty")
     String app;
 
-    @NotBlank(message = "uri не может быть пустым")
+    @NotBlank(message = "uri can't be empty")
     String uri;
 
-    @NotBlank(message = "ip не может быть пустым")
+    @NotBlank(message = "ip can't be empty")
     String ip;
 
-    @NotBlank(message = "timestamp не может быть пустым")
+    @NotBlank(message = "timestamp can't be empty")
     String timestamp;
 }

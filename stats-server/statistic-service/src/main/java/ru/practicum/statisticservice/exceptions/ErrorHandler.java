@@ -9,10 +9,6 @@ import java.time.LocalDateTime;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-/**
- * Класс описывающий ErrorHandler для централизованной обработки ошибок.
- */
-
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {
@@ -20,9 +16,9 @@ public class ErrorHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiError badRequestException(final BadRequestException e) {
-        log.warn("Исключение badRequestException {}", e.getMessage());
+        log.warn("badRequestException {}", e.getMessage());
         return ApiError.builder()
-                .reason("Неверные даты")
+                .reason("Invalid date")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();

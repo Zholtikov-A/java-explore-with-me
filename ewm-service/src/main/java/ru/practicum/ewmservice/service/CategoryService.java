@@ -50,17 +50,17 @@ public class CategoryService {
                 .orElseThrow(() -> new ValidationIdException("Category with id = \"" + catId + "\" not found"));
     }
 
+    public CategoryDto updateCategory(CategoryCreateDto categoryDto, Long catId) {
+        Category category = checkCategory(catId);
+        category.setName(categoryDto.getName());
+        return CategoryMapper.toCategoryDto(categoryRepository.save(category));
+    }
+
     private void checkEvent(Long catId) {
         Event event = eventService.findEventByCategoryId(catId);
         if (event != null) {
             log.warn("ERROR! Category with id = {} is not empty", catId);
             throw new DataIntegrityViolationException("The category is not empty");
         }
-    }
-
-    public CategoryDto updateCategory(CategoryCreateDto categoryDto, Long catId) {
-        Category category = checkCategory(catId);
-        category.setName(categoryDto.getName());
-        return CategoryMapper.toCategoryDto(categoryRepository.save(category));
     }
 }
