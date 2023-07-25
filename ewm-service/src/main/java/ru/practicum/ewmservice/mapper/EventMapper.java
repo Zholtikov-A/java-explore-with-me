@@ -53,6 +53,9 @@ public class EventMapper {
                 .build();
     }
 
+    public static void toEventDto() {
+    }
+
     public static EventFullDto toEventFullDto(Event event) {
         return EventFullDto.builder()
                 .id(event.getId())
