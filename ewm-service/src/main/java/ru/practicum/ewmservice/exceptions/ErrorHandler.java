@@ -16,10 +16,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-/**
- * Класс описывающий ErrorHandler для централизованной обработки ошибок.
- */
-
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {
@@ -27,10 +23,10 @@ public class ErrorHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError badRequestException(final BadRequestException e) {
-        log.warn("Исключение badRequestException {}", e.getMessage());
+        log.warn("BadRequestException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .reason("Запрос составлен некорректно")
+                .reason("Invalid request")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -39,10 +35,10 @@ public class ErrorHandler {
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError conflictRequestException(final ConflictException e) {
-        log.warn("Исключение badRequestException {}", e.getMessage());
+        log.warn("BadRequestException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.CONFLICT)
-                .reason("Входящие данные имеют конфликт")
+                .reason("Input data conflict")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -51,10 +47,10 @@ public class ErrorHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiError handleSqlException(final DataIntegrityViolationException e) {
-        log.warn("Ошибка DataIntegrityViolationException {}", e.getMessage());
+        log.warn("DataIntegrityViolationException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.CONFLICT)
-                .reason("Нарушение целостности данных")
+                .reason("Data integrity violation")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -63,10 +59,10 @@ public class ErrorHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleJsonParseException(final HttpMessageNotReadableException e) {
-        log.warn("Ошибка HttpMessageNotReadableException {}", e.getMessage());
+        log.warn("HttpMessageNotReadableException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .reason("Некорректный JSON запрос")
+                .reason("Invalid JSON")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -75,7 +71,7 @@ public class ErrorHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleMethodArgumentNotValid(final MethodArgumentNotValidException e) {
-        log.warn("Ошибка валидации: {}", e.getMessage());
+        log.warn("Validation error: {}", e.getMessage());
 
         String errors = e.getBindingResult()
                 .getFieldErrors()
@@ -85,7 +81,7 @@ public class ErrorHandler {
 
         return ApiError.builder()
                 .status(HttpStatus.BAD_REQUEST)
-                .reason("Ошибка валидации данных запроса")
+                .reason("Request validation error")
                 .message(errors)
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -96,7 +92,7 @@ public class ErrorHandler {
             MissingRequestHeaderException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError handleMethodArgumentTypeMismatchExceptionD(Exception e) {
-        log.warn("Ошибка {}, описание: {}", e.getClass(), e.getMessage());
+        log.warn("Error {}, Description: {}", e.getClass(), e.getMessage());
         String exceptionType;
         String errorMessage;
 
@@ -107,7 +103,7 @@ public class ErrorHandler {
         } else if (e instanceof MethodArgumentTypeMismatchException) {
             exceptionType = "Unknown state: UNSUPPORTED_STATUS";
         } else {
-            exceptionType = "Неизвестное исключение";
+            exceptionType = "Unknown exception";
         }
         errorMessage = e.getMessage();
         return ApiError.builder()
@@ -121,10 +117,10 @@ public class ErrorHandler {
     @ExceptionHandler(ValidationIdException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError validationIdException(final ValidationIdException e) {
-        log.warn("Исключение ValidationIdException {}", e.getMessage());
+        log.warn("ValidationIdException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.NOT_FOUND)
-                .reason("The required object was not found")
+                .reason("Object not found")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
@@ -133,10 +129,10 @@ public class ErrorHandler {
     @ExceptionHandler(ForbiddenException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ApiError forbiddenException(final ForbiddenException e) {
-        log.warn("Исключение ValidationDataTimeException {}", e.getMessage());
+        log.warn("ForbiddenException {}", e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.FORBIDDEN)
-                .reason("Для запрошенной операции условия не выполнены.")
+                .reason("Forbidden operation.")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
