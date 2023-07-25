@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 import ru.practicum.ewmservice.dto.*;
 import ru.practicum.ewmservice.enums.StateAction;
 import ru.practicum.ewmservice.enums.StateSort;
-import ru.practicum.ewmservice.enums.StatusEventRequest;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 import ru.practicum.ewmservice.exceptions.BadRequestException;
 import ru.practicum.ewmservice.exceptions.ConflictException;
@@ -98,14 +97,14 @@ public class EventService {
             long hoursDifference = ChronoUnit.HOURS.between(currentTime, eventUserRequest.getEventDate());
 
             if (hoursDifference < MINIMUM_HOURS_FOR_CREATE_EVENT) {
-                throw new BadRequestException("Должно содержать дату, которая еще не наступила");
+                throw new BadRequestException("Must contain future date");
             }
         }
 
         Event event = checkEvent(eventId, userId);
 
         if (event.getState() == StatusParticipation.PUBLISHED) {
-            throw new ConflictException("Можно изменить только отложенные или отмененные события");
+            throw new ConflictException("Event in status " + StatusParticipation.PUBLISHED + " can't be changed.");
         }
 
 
@@ -165,7 +164,7 @@ public class EventService {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new ValidationIdException("Event with id = \"" + eventId + "\" was not found"));
 
         if (event.getState() != StatusParticipation.PENDING) {
-            throw new ConflictException("Only event in status " + StatusEventRequest.PENDING + " can be publish. Current status: " + event.getState());
+            throw new ConflictException("Only event in status " + StatusParticipation.PENDING + " can be publish. Current status: " + event.getState());
         }
 
 
@@ -225,6 +224,7 @@ public class EventService {
             rangeEnd = rangeStart.plusYears(1000);
         }
 
+        assert rangeStart != null;
         if (rangeStart.isAfter(rangeEnd)) {
             throw new BadRequestException("Sorting start can't be after end time.");
         }
