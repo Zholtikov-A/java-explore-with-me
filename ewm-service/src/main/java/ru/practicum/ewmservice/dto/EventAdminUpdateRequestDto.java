@@ -9,13 +9,12 @@ import ru.practicum.ewmservice.model.Location;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Builder
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpdateEventUserRequest {
-
+public class EventAdminUpdateRequestDto {
     @Size(min = 20, max = 2000, message = "Annotation length must be between 20 and 2000 symbols")
     String annotation;
 

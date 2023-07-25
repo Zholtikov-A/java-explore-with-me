@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto createEvent(@PathVariable @Positive Long userId,
-                                    @RequestBody @Valid NewEventDto eventDto) {
+                                    @RequestBody @Valid EventCreateDto eventDto) {
         log.info("Get request to endpoint: POST \"users/{userId}/events\" createEvent id = {}", userId);
         return eventService.createEvent(userId, eventDto);
     }
@@ -51,7 +51,7 @@ public class UserController {
     @PatchMapping("/{userId}/events/{eventId}")
     public EventFullDto updateEvent(@PathVariable @Positive Long userId,
                                     @PathVariable @Positive Long eventId,
-                                    @RequestBody @Validated UpdateEventUserRequest eventUserRequest) {
+                                    @RequestBody @Validated EventUserUpdateRequestDto eventUserRequest) {
         log.info("Get request to endpoint: PATCH \"users/{userId}/events/{eventId}\" updateEvent" +
                 " userId = {}, eventId = {}", userId, eventId);
         return eventService.updateEvent(userId, eventId, eventUserRequest);
@@ -66,9 +66,9 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}/events/{eventId}/requests")
-    public EventRequestStatusUpdateResult updateRequestEventByUser(@PathVariable @Positive Long userId,
-                                                                   @PathVariable @Positive Long eventId,
-                                                                   @RequestBody @Valid EventRequestStatusUpdateRequest statusUpdateRequest) {
+    public EventRequestStatusUpdateResultDto updateRequestEventByUser(@PathVariable @Positive Long userId,
+                                                                      @PathVariable @Positive Long eventId,
+                                                                      @RequestBody @Valid EventRequestStatusUpdateRequestDto statusUpdateRequest) {
         log.info("Get request to endpoint: PATCH \"users/{userId}/events/{eventId}/requests\" updateRequestEventByUser" +
                 " userId = {}, eventId = {}", userId, eventId);
         return requestService.updateRequestStatus(userId, eventId, statusUpdateRequest);

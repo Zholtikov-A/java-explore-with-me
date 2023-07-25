@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class EventRequestStatusUpdateRequest {
+public class EventRequestStatusUpdateRequestDto {
     Set<Long> requestIds;
     StatusEventRequest status;
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UpdateCompilationRequest {
+public class CompilationUpdateRequestDto {
 
     Set<Long> events;
 

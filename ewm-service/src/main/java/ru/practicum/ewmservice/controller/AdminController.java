@@ -33,7 +33,7 @@ public class AdminController {
 
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDto createCategory(@RequestBody @Valid NewCategoryDto category) {
+    public CategoryDto createCategory(@RequestBody @Valid CategoryCreateDto category) {
         log.info("Get request to endpoint POST \"admin/categories\" createCategory {}", category);
         return categoryService.createCategory(category);
     }
@@ -47,7 +47,7 @@ public class AdminController {
 
     @PatchMapping("/categories/{catId}")
     public CategoryDto updateCategory(@PathVariable @Positive Long catId,
-                                      @RequestBody @Valid NewCategoryDto categoryDto) {
+                                      @RequestBody @Valid CategoryCreateDto categoryDto) {
         log.info("Get request to endpoint: PATCH \"admin/categories/{catId}\" updateCategory, id = {}", catId);
         return categoryService.updateCategory(categoryDto, catId);
     }
@@ -66,7 +66,7 @@ public class AdminController {
 
     @PatchMapping("/events/{eventId}")
     public EventFullDto updateEventAndStatus(@PathVariable @Positive Long eventId,
-                                             @RequestBody @Validated UpdateEventAdminRequest adminRequest) {
+                                             @RequestBody @Validated EventAdminUpdateRequestDto adminRequest) {
         log.info("Get request to endpoint: PATCH \"admin/events/{eventId}\" updateEventAndStatus, id = {}", eventId);
         return eventService.updateEventAndStatus(eventId, adminRequest);
     }
@@ -82,7 +82,7 @@ public class AdminController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@RequestBody @Valid NewUserRequest userRequest) {
+    public UserDto createUser(@RequestBody @Valid UserCreateRequestDto userRequest) {
         log.info("Get request to endpoint: POST \"admin/users\" createUser");
         return userService.createUser(userRequest);
     }
@@ -96,9 +96,9 @@ public class AdminController {
 
     @PostMapping("/compilations")
     @ResponseStatus(HttpStatus.CREATED)
-    public CompilationDto createCompilation(@RequestBody @Valid NewCompilationDto newCompilationDto) {
+    public CompilationDto createCompilation(@RequestBody @Valid CompilationCreateDto compilationCreateDto) {
         log.info("Get request to endpoint: POST \"admin/compilations\" createCompilation");
-        return compilationService.create(newCompilationDto);
+        return compilationService.create(compilationCreateDto);
     }
 
     @DeleteMapping("/compilations/{compId}")
@@ -110,9 +110,9 @@ public class AdminController {
 
     @PatchMapping("/compilations/{compId}")
     public CompilationDto updateCompilation(@PathVariable @Positive Long compId,
-                                            @RequestBody @Valid UpdateCompilationRequest updateCompilationRequest) {
+                                            @RequestBody @Valid CompilationUpdateRequestDto compilationUpdateRequestDto) {
         log.info("Get request to endpoint: PATCH \"admin/compilations/{compId}\" updateCompilation id = {}", compId);
-        return compilationService.update(compId, updateCompilationRequest);
+        return compilationService.update(compId, compilationUpdateRequestDto);
     }
 
 }

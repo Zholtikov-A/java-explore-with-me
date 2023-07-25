@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NewCategoryDto {
+public class CategoryCreateDto {
 
     @Size(min = 1, max = 50, message = "Имя категории не должно быть пустым и более 50 символов")
     @NotBlank(message = "Name не может быть пустым")

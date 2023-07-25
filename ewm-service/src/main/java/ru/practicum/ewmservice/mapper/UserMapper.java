@@ -1,7 +1,7 @@
 package ru.practicum.ewmservice.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.ewmservice.dto.NewUserRequest;
+import ru.practicum.ewmservice.dto.UserCreateRequestDto;
 import ru.practicum.ewmservice.dto.UserDto;
 import ru.practicum.ewmservice.model.User;
 
@@ -15,7 +15,7 @@ public class UserMapper {
                 .build();
     }
 
-    public User toUser(NewUserRequest userRequest) {
+    public User toUser(UserCreateRequestDto userRequest) {
         return User.builder()
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())

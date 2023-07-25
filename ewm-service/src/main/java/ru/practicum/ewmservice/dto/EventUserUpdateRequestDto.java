@@ -6,25 +6,22 @@ import lombok.experimental.FieldDefaults;
 import ru.practicum.ewmservice.enums.StateAction;
 import ru.practicum.ewmservice.model.Location;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NewEventDto {
+public class EventUserUpdateRequestDto {
+
     @Size(min = 20, max = 2000, message = "Annotation length must be between 20 and 2000 symbols")
-    @NotBlank(message = "Annotation can't be empty")
     String annotation;
 
-    Long category;
+    Integer category;
 
     @Size(min = 20, max = 7000, message = "Description length must be between 20 and 7000 symbols")
-    @NotBlank(message = "Description can't be empty")
     String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -32,17 +29,14 @@ public class NewEventDto {
 
     Location location;
 
-    Boolean paid = false;
+    Boolean paid;
 
-    @PositiveOrZero
-    Integer participantLimit = 0;
+    Integer participantLimit;
 
-    Boolean requestModeration = true;
+    Boolean requestModeration;
 
     StateAction stateAction;
 
     @Size(min = 3, max = 120, message = "Title length must be between 3 and 120 symbols")
-    @NotBlank(message = "Title can't be empty")
     String title;
-
 }

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NewUserRequest {
+public class UserCreateRequestDto {
 
     @Size(min = 2, max = 250, message = "Name length must be between 2 and 250 symbols")
     @NotBlank(message = "Name can't be empty")

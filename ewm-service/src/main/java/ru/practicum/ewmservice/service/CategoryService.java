@@ -6,7 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmservice.dto.CategoryDto;
-import ru.practicum.ewmservice.dto.NewCategoryDto;
+import ru.practicum.ewmservice.dto.CategoryCreateDto;
 import ru.practicum.ewmservice.exceptions.ValidationIdException;
 import ru.practicum.ewmservice.mapper.CategoryMapper;
 import ru.practicum.ewmservice.model.Category;
@@ -24,7 +24,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final EventService eventService;
 
-    public CategoryDto createCategory(NewCategoryDto category) {
+    public CategoryDto createCategory(CategoryCreateDto category) {
         Category newCategory = categoryRepository.save(CategoryMapper.toCategory(category));
         return CategoryMapper.toCategoryDto(newCategory);
     }
@@ -58,7 +58,7 @@ public class CategoryService {
         }
     }
 
-    public CategoryDto updateCategory(NewCategoryDto categoryDto, Long catId) {
+    public CategoryDto updateCategory(CategoryCreateDto categoryDto, Long catId) {
         Category category = checkCategory(catId);
         category.setName(categoryDto.getName());
         return CategoryMapper.toCategoryDto(categoryRepository.save(category));

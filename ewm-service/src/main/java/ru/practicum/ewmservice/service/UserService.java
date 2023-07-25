@@ -3,7 +3,7 @@ package ru.practicum.ewmservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmservice.dto.NewUserRequest;
+import ru.practicum.ewmservice.dto.UserCreateRequestDto;
 import ru.practicum.ewmservice.dto.UserDto;
 import ru.practicum.ewmservice.exceptions.ValidationIdException;
 import ru.practicum.ewmservice.mapper.UserMapper;
@@ -20,7 +20,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserDto createUser(NewUserRequest userRequest) {
+    public UserDto createUser(UserCreateRequestDto userRequest) {
         User user = UserMapper.toUser(userRequest);
         User saveUser = userRepository.save(user);
         return UserMapper.toUserDto(saveUser);

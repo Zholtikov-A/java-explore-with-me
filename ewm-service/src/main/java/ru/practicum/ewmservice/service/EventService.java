@@ -63,7 +63,7 @@ public class EventService {
         return eventList.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
     }
 
-    public EventFullDto createEvent(Long userId, NewEventDto eventDto) {
+    public EventFullDto createEvent(Long userId, EventCreateDto eventDto) {
         LocalDateTime created = LocalDateTime.now();
         long hoursDifference = ChronoUnit.HOURS.between(created, eventDto.getEventDate());
 
@@ -90,7 +90,7 @@ public class EventService {
     }
 
 
-    public EventFullDto updateEvent(Long userId, Long eventId, UpdateEventUserRequest eventUserRequest) {
+    public EventFullDto updateEvent(Long userId, Long eventId, EventUserUpdateRequestDto eventUserRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
 
         if (eventUserRequest.getEventDate() != null) {
@@ -147,7 +147,7 @@ public class EventService {
     }
 
 
-    public EventFullDto updateEventAndStatus(Long eventId, UpdateEventAdminRequest adminRequest) {
+    public EventFullDto updateEventAndStatus(Long eventId, EventAdminUpdateRequestDto adminRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
 
         if (adminRequest.getEventDate() != null) {

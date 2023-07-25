@@ -3,8 +3,8 @@ package ru.practicum.ewmservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.ewmservice.dto.EventRequestStatusUpdateRequest;
-import ru.practicum.ewmservice.dto.EventRequestStatusUpdateResult;
+import ru.practicum.ewmservice.dto.EventRequestStatusUpdateRequestDto;
+import ru.practicum.ewmservice.dto.EventRequestStatusUpdateResultDto;
 import ru.practicum.ewmservice.dto.ParticipationRequestDto;
 import ru.practicum.ewmservice.enums.StatusEventRequest;
 import ru.practicum.ewmservice.enums.StatusParticipation;
@@ -90,7 +90,7 @@ public class RequestService {
         return requestList.stream().map(RequestMapper::toParticipationRequestDto).collect(Collectors.toList());
     }
 
-    public EventRequestStatusUpdateResult updateRequestStatus(Long userId, Long eventId, EventRequestStatusUpdateRequest statusUpdateRequest) {
+    public EventRequestStatusUpdateResultDto updateRequestStatus(Long userId, Long eventId, EventRequestStatusUpdateRequestDto statusUpdateRequest) {
         Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
 
         if (event == null) {
@@ -101,7 +101,7 @@ public class RequestService {
 
         List<Request> requestList = requestRepository.findAllByEventAndIdIn(eventId, requestIds);
 
-        EventRequestStatusUpdateResult requestStatusUpdateResult = new EventRequestStatusUpdateResult();
+        EventRequestStatusUpdateResultDto requestStatusUpdateResult = new EventRequestStatusUpdateResultDto();
 
         if (event.getParticipantLimit() == 0 || !event.getRequestModeration()) {
             requestStatusUpdateResult.setConfirmedRequests(requestList.stream().map(RequestMapper::toParticipationRequestDto).collect(Collectors.toList()));

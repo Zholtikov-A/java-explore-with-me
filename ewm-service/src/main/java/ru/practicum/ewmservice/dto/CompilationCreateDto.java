@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NewCompilationDto {
+public class CompilationCreateDto {
 
     Set<Long> events;
     Boolean pinned = false;

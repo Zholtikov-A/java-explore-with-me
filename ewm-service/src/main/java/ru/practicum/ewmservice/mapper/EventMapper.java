@@ -12,20 +12,20 @@ import java.time.LocalDateTime;
 
 @UtilityClass
 public class EventMapper {
-    public static Event toEvent(NewEventDto newEventDto, Category category, Location location, User initiator, LocalDateTime created) {
+    public static Event toEvent(EventCreateDto eventCreateDto, Category category, Location location, User initiator, LocalDateTime created) {
         return Event.builder()
-                .annotation(newEventDto.getAnnotation())
+                .annotation(eventCreateDto.getAnnotation())
                 .category(category)
                 .confirmedRequests(0)
                 .createdOn(created)
-                .description(newEventDto.getDescription())
-                .eventDate(newEventDto.getEventDate())
+                .description(eventCreateDto.getDescription())
+                .eventDate(eventCreateDto.getEventDate())
                 .initiator(initiator)
-                .location(newEventDto.getLocation())
-                .paid(newEventDto.getPaid())
-                .participantLimit(newEventDto.getParticipantLimit())
-                .requestModeration(newEventDto.getRequestModeration())
-                .title(newEventDto.getTitle())
+                .location(eventCreateDto.getLocation())
+                .paid(eventCreateDto.getPaid())
+                .participantLimit(eventCreateDto.getParticipantLimit())
+                .requestModeration(eventCreateDto.getRequestModeration())
+                .title(eventCreateDto.getTitle())
                 .state(StatusParticipation.PENDING)
                 .publishedOn(LocalDateTime.now())
                 .views(0)
