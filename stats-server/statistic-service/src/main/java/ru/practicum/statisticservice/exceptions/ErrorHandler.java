@@ -16,9 +16,9 @@ public class ErrorHandler {
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(BAD_REQUEST)
     public ApiError badRequestException(final BadRequestException e) {
-        log.warn("badRequestException {}", e.getMessage());
+        log.warn("Исключение badRequestException {}", e.getMessage());
         return ApiError.builder()
-                .reason("Invalid date")
+                .reason("Неверные даты")
                 .message(e.getMessage())
                 .timestamp(LocalDateTime.now())
                 .build();
