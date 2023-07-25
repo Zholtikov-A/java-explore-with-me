@@ -1,10 +1,8 @@
 package ru.practicum.ewmservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.ewmservice.enums.StateAction;
 import ru.practicum.ewmservice.model.Location;
 
@@ -17,33 +15,34 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NewEventDto {
-    @Size(min = 20, max = 2000, message = "Короткое описание должно быть минимум 20 символов и не более не более 2000 символов")
-    @NotBlank(message = "Короткое описание не должно быть пустым")
-    private String annotation;
+    @Size(min = 20, max = 2000, message = "Annotation length must be between 20 and 2000 symbols")
+    @NotBlank(message = "Annotation can't be empty")
+    String annotation;
 
-    private Long category;
+    Long category;
 
-    @Size(min = 20, max = 7000, message = "Описание должно быть минимум 20 символов и не более не более 7000 символов")
-    @NotBlank(message = "Описание не должно быть пустым")
-    private String description;
+    @Size(min = 20, max = 7000, message = "Description length must be between 20 and 7000 symbols")
+    @NotBlank(message = "Description can't be empty")
+    String description;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime eventDate;
+    LocalDateTime eventDate;
 
-    private Location location;
+    Location location;
 
-    private Boolean paid = false;
+    Boolean paid = false;
 
     @PositiveOrZero
-    private Integer participantLimit = 0;
+    Integer participantLimit = 0;
 
-    private Boolean requestModeration = true;
+    Boolean requestModeration = true;
 
-    private StateAction stateAction;
+    StateAction stateAction;
 
-    @Size(min = 3, max = 120, message = "Новый заголовок должен быть минимум 3 символа и не более 120 символов")
-    @NotBlank(message = "title не должно быть пустым")
-    private String title;
+    @Size(min = 3, max = 120, message = "Title length must be between 3 and 120 symbols")
+    @NotBlank(message = "Title can't be empty")
+    String title;
 
 }

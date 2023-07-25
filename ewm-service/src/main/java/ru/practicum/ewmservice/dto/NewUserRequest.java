@@ -1,31 +1,26 @@
 package ru.practicum.ewmservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-/**
- * Данные нового пользователя
- */
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NewUserRequest {
 
-    @Size(min = 2, max = 250, message = "Имя должно быть минимум 2 символа и не более 250 символов")
-    @NotBlank(message = "Имя не может быть пустым")
+    @Size(min = 2, max = 250, message = "Name length must be between 2 and 250 symbols")
+    @NotBlank(message = "Name can't be empty")
     private String name;
 
-    @Email(message = "Электронная почта не может быть пустой и должна содержать символ @")
-    @Size(min = 6, max = 254, message = "Email должен быть минимум 6 символов и не более 254 символов")
-    @NotBlank(message = "Email не может быть пустым")
+    @Email(message = "Email can't be empty and must contain \"@\" symbol")
+    @Size(min = 6, max = 254, message = "Email length must be between 6 and 254 symbols")
+    @NotBlank(message = "Email can't be empty")
     private String email;
 
 }

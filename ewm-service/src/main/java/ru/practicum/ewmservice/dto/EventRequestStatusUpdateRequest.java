@@ -1,21 +1,17 @@
 package ru.practicum.ewmservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.practicum.ewmservice.enums.StatusEventRequest;
 
 import java.util.Set;
 
-/**
- * Изменение статуса запроса на участие в событии текущего пользователя
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventRequestStatusUpdateRequest {
-    private Set<Long> requestIds;
-    private StatusEventRequest status;
+    Set<Long> requestIds;
+    StatusEventRequest status;
 }

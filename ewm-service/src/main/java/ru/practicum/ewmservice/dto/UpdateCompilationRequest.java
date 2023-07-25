@@ -1,31 +1,23 @@
 package ru.practicum.ewmservice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 
-/**
- * Изменение информации о подборке событий.
- * Если поле в запросе не указано (равно null) - значит изменение этих данных не треубется.
- */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UpdateCompilationRequest {
 
-    /**
-     * Список id событий подборки для полной замены текущего списка
-     */
-    private Set<Long> events;
+    Set<Long> events;
 
-    private Boolean pinned;
+    Boolean pinned;
 
-    @Length(min = 1, max = 50, message = "Заголовок подборки не должен быть пустым и более 50 символов")
-    private String title;
+    @Length(min = 1, max = 50, message = "Title length must be between 1 and 50 symbols")
+    String title;
 
 }
