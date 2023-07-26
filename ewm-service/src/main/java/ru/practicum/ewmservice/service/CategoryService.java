@@ -45,15 +45,15 @@ public class CategoryService {
         return CategoryMapper.toCategoryDto(category);
     }
 
-    public Category checkCategory(Long catId) {
-        return categoryRepository.findById(catId)
-                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + catId + "\" not found"));
-    }
-
     public CategoryDto updateCategory(CategoryCreateDto categoryDto, Long catId) {
         Category category = checkCategory(catId);
         category.setName(categoryDto.getName());
         return CategoryMapper.toCategoryDto(categoryRepository.save(category));
+    }
+
+    private Category checkCategory(Long catId) {
+        return categoryRepository.findById(catId)
+                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + catId + "\" not found"));
     }
 
     private void checkEvent(Long catId) {
