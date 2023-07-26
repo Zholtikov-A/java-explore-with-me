@@ -39,9 +39,9 @@ public class CompilationService {
     }
 
     public void delete(Long compId) {
-            if(!compilationRepository.existsById(compId)){
-                throw new ValidationIdException("Compilation with id = " + compId + " not found");
-            }
+        if (!compilationRepository.existsById(compId)) {
+            throw new ValidationIdException("Compilation with id = " + compId + " not found");
+        }
         compilationRepository.deleteById(compId);
     }
 
