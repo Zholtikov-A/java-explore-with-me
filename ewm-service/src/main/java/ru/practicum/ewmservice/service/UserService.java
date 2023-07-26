@@ -39,8 +39,10 @@ public class UserService {
     }
 
     public void deleteUser(Long userId) {
-        User user = checkUser(userId);
-        userRepository.delete(user);
+        if (!userRepository.existsById(userId)) {
+            throw new ValidationIdException("Compilation with id = " + userId + " not found");
+        }
+        userRepository.deleteById(userId);
     }
 
     public User checkUser(Long userId) {
