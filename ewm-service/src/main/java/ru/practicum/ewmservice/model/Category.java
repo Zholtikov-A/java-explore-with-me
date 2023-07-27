@@ -1,32 +1,24 @@
-package ru.practicum.statisticservice.model;
+package ru.practicum.ewmservice.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Entity
-@Table(name = "hits")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "categories")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Hit {
-
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hit_id")
+    @Column(name = "category_id")
     Long id;
 
-    String app;
-
-    String uri;
-
-    String ip;
-
-    LocalDateTime created;
-
+    @Column(name = "category_name")
+    String name;
 }

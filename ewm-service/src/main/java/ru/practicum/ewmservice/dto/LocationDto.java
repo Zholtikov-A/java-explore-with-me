@@ -1,15 +1,15 @@
-package ru.practicum.statisticdto;
+package ru.practicum.ewmservice.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ViewStats {
-    String app;
-    String uri;
-    Long hits;
+public class LocationDto {
+
+    Float lat;
+    Float lon;
 }

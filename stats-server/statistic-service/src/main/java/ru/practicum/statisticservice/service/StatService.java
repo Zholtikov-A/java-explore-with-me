@@ -5,7 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.statisticdto.EndpointHit;
 import ru.practicum.statisticdto.ViewStats;
+import ru.practicum.statisticservice.exceptions.BadRequestException;
 import ru.practicum.statisticservice.mapper.HitMapper;
+import ru.practicum.statisticservice.model.Hit;
 import ru.practicum.statisticservice.repository.StatRepository;
 
 import java.time.LocalDateTime;
@@ -17,16 +19,20 @@ public class StatService {
 
     private final StatRepository statRepository;
 
-    public void create(EndpointHit endpointHit) {
-        statRepository.save(HitMapper.toHit(endpointHit));
+    public EndpointHit create(EndpointHit endpointHit) {
+        Hit hit = statRepository.save(HitMapper.toHit(endpointHit));
+        return HitMapper.toHitDto(hit);
     }
 
-    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, Boolean unique, List<String> uris) {
+    public List<ViewStats> getStats(LocalDateTime start, LocalDateTime end, Boolean unique, String[] uris) {
         List<ViewStats> viewStatsList;
+        if (start.isAfter(end)) {
+            throw new BadRequestException("Неверные датами начала и конца диапазона");
+        }
 
-        if (uris == null || uris.isEmpty()) {
+        if (uris == null || uris.length == 0) {
             if (unique) {
-                viewStatsList = statRepository.findViewStatsWithoutUrisUnigue(start, end, PageRequest.of(0, 10));
+                viewStatsList = statRepository.findViewStatsWithoutUrisUnique(start, end, PageRequest.of(0, 10));
             } else {
                 viewStatsList = statRepository.findViewStatsWithoutUris(start, end, PageRequest.of(0, 10));
             }
