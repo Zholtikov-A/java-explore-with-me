@@ -277,7 +277,7 @@ public class EventService {
     public EventFullDto addAnswerModeration(Long eventId, ModerationDto moderationDto, StateAction state) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event with id=" + eventId + " not found"));
         if (!event.getState().equals(StatusParticipation.PENDING)) {
-            throw new ConflictException("Only events in status " + StatusParticipation.PENDING + " can be moderated.");
+            throw new ConflictException("Only events in status " + StatusParticipation.PENDING + " can be moderated. Current event status: " + event.getState());
         }
         Moderation moderation = ModerationMapper.toModeration(moderationDto, eventId);
 
