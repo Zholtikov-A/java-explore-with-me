@@ -235,7 +235,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"eventId\": 10,\r\n  \"comment\": \"Approved.\"\r\n}"
+					"raw": "{\r\n  \"eventId\": 10,\r\n  \"comment\": \"Approved event.\"\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/admin/:eventId/moderation?state=PUBLISH_EVENT",
