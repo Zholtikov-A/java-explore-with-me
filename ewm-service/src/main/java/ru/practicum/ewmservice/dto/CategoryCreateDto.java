@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryCreateDto {
 
-    @Size(min = 1, max = 50, message = "Имя категории не должно быть пустым и более 50 символов")
-    @NotBlank(message = "Name не может быть пустым")
+    @Size(min = 1, max = 50, message = "Name length must be between 1 and 50 symbols")
+    @NotBlank(message = "Name can't be empty")
     String name;
 }

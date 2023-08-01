@@ -114,10 +114,10 @@ public class ErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler(ValidationIdException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError validationIdException(final ValidationIdException e) {
-        log.warn("ValidationIdException: " + e.getMessage());
+    public ApiError EntityNotFoundException(final EntityNotFoundException e) {
+        log.warn("EntityNotFoundException: " + e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.NOT_FOUND)
                 .reason("The required object was not found")

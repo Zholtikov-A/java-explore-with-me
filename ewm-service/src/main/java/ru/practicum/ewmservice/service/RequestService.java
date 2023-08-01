@@ -9,7 +9,7 @@ import ru.practicum.ewmservice.dto.ParticipationRequestDto;
 import ru.practicum.ewmservice.enums.StatusEventRequest;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 import ru.practicum.ewmservice.exceptions.ConflictException;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
+import ru.practicum.ewmservice.exceptions.EntityNotFoundException;
 import ru.practicum.ewmservice.mapper.RequestMapper;
 import ru.practicum.ewmservice.model.Event;
 import ru.practicum.ewmservice.model.Request;
@@ -33,7 +33,7 @@ public class RequestService {
 
     public ParticipationRequestDto addRequest(Long userId, Long eventId) {
         Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new ValidationIdException("Event with id=" + eventId + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Event with id=" + eventId + " not found"));
 
         if (event.getState() != StatusParticipation.PUBLISHED) {
             throw new ConflictException("Can't participate in unpublished event");
@@ -71,7 +71,7 @@ public class RequestService {
         Request request = requestRepository.findByIdAndRequester(requestId, userId);
 
         if (request == null) {
-            throw new ValidationIdException("Request with id = " + requestId + " not found");
+            throw new EntityNotFoundException("Request with id = " + requestId + " not found");
         }
         request.setStatus(StatusEventRequest.CANCELED);
         Request updateRequest = requestRepository.save(request);
@@ -83,7 +83,7 @@ public class RequestService {
         Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
 
         if (event == null) {
-            throw new ValidationIdException("Event with id = " + eventId + " not found");
+            throw new EntityNotFoundException("Event with id = " + eventId + " not found");
         }
 
         List<Request> requestList = requestRepository.findAllByEvent(eventId);
@@ -94,7 +94,7 @@ public class RequestService {
         Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
 
         if (event == null) {
-            throw new ValidationIdException("Event with id = " + eventId + " not found");
+            throw new EntityNotFoundException("Event with id = " + eventId + " not found");
         }
 
         Set<Long> requestIds = statusUpdateRequest.getRequestIds();

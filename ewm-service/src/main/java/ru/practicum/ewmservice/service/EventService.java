@@ -16,15 +16,14 @@ import ru.practicum.ewmservice.enums.StateSort;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 import ru.practicum.ewmservice.exceptions.BadRequestException;
 import ru.practicum.ewmservice.exceptions.ConflictException;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
+import ru.practicum.ewmservice.exceptions.EntityNotFoundException;
 import ru.practicum.ewmservice.mapper.EventMapper;
-import ru.practicum.ewmservice.model.Category;
-import ru.practicum.ewmservice.model.Event;
-import ru.practicum.ewmservice.model.Location;
-import ru.practicum.ewmservice.model.User;
+import ru.practicum.ewmservice.mapper.ModerationMapper;
+import ru.practicum.ewmservice.model.*;
 import ru.practicum.ewmservice.repository.CategoryRepository;
 import ru.practicum.ewmservice.repository.EventRepository;
 import ru.practicum.ewmservice.repository.LocationRepository;
+import ru.practicum.ewmservice.repository.ModerationRepository;
 import ru.practicum.statisticclient.StatsClient;
 import ru.practicum.statisticdto.EndpointHit;
 import ru.practicum.statisticdto.ViewStats;
@@ -45,6 +44,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class EventService {
 
+    private final ModerationRepository moderationRepository;
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
     private final UserService userService;
@@ -72,7 +72,7 @@ public class EventService {
         }
 
         Category category = categoryRepository.findById(eventDto.getCategory())
-                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + eventDto.getCategory() + "\" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category with id = \"" + eventDto.getCategory() + "\" not found"));
 
         User initiator = userService.checkUser(userId);
         Location location = locationRepository.save(eventDto.getLocation());
@@ -161,7 +161,7 @@ public class EventService {
             }
         }
 
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new ValidationIdException("Event with id = \"" + eventId + "\" was not found"));
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event with id = \"" + eventId + "\" was not found"));
 
         if (event.getState() != StatusParticipation.PENDING) {
             throw new ConflictException("Only event in status " + StatusParticipation.PENDING + " can be publish. Current status: " + event.getState());
@@ -183,7 +183,7 @@ public class EventService {
     public Event checkEvent(Long eventId, Long userId) {
         Event event = eventRepository.findByIdAndInitiatorId(eventId, userId);
         if (event == null) {
-            throw new ValidationIdException("Event with id=" + eventId + " not found");
+            throw new EntityNotFoundException("Event with id=" + eventId + " not found");
         }
         return event;
     }
@@ -191,7 +191,7 @@ public class EventService {
     public EventFullDto getEventsById(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findByIdAndState(eventId, StatusParticipation.PUBLISHED);
         if (event == null) {
-            throw new ValidationIdException("Event with id=" + eventId + " not found");
+            throw new EntityNotFoundException("Event with id=" + eventId + " not found");
         }
 
         Integer oldCountHit = getCountUniqueViews(request);
@@ -267,6 +267,43 @@ public class EventService {
                 .build());
 
         return events.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+    }
+
+    public List<EventShortDto> getWaitModeration() {
+        List<Event> listWaitModeration = eventRepository.findByState(StatusParticipation.PENDING);
+        return listWaitModeration.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+    }
+
+    public EventFullDto addAnswerModeration(Long eventId, ModerationDto moderationDto, StateAction state) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EntityNotFoundException("Event with id=" + eventId + " not found"));
+        if (!event.getState().equals(StatusParticipation.PENDING)) {
+            throw new ConflictException("Only events in status " + StatusParticipation.PENDING + " can be moderated.");
+        }
+        Moderation moderation = ModerationMapper.toModeration(moderationDto, eventId);
+
+        switch (state) {
+            case PUBLISH_EVENT:
+                event.setState(StatusParticipation.PUBLISHED);
+                break;
+            case REJECT_EVENT:
+                event.setState(StatusParticipation.CANCELED);
+                break;
+            case SEND_TO_REVIEW:
+                event.setState(StatusParticipation.REVIEW);
+                break;
+            default:
+                throw new BadRequestException("Moderation failed. Reason: Invalid request state");
+        }
+
+        moderationRepository.save(moderation);
+        eventRepository.save(event);
+        return EventMapper.toEventFullDto(event);
+    }
+
+    public ModerationDto getModerationById(Long moderationId) {
+        return ModerationMapper.toModerationDto(moderationRepository
+                .findById(moderationId)
+                .orElseThrow(() -> new EntityNotFoundException("Moderation with id = " + moderationId + " not found")));
     }
 
     private Integer getCountUniqueViews(HttpServletRequest request) {
