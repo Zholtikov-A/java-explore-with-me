@@ -7,7 +7,7 @@ import ru.practicum.ewmservice.dto.CompilationCreateDto;
 import ru.practicum.ewmservice.dto.CompilationDto;
 import ru.practicum.ewmservice.dto.CompilationUpdateRequestDto;
 import ru.practicum.ewmservice.dto.EventShortDto;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
+import ru.practicum.ewmservice.exceptions.EntityNotFoundException;
 import ru.practicum.ewmservice.mapper.CompilationMapper;
 import ru.practicum.ewmservice.mapper.EventMapper;
 import ru.practicum.ewmservice.model.Compilation;
@@ -40,14 +40,14 @@ public class CompilationService {
 
     public void delete(Long compId) {
         if (!compilationRepository.existsById(compId)) {
-            throw new ValidationIdException("Compilation with id = " + compId + " not found");
+            throw new EntityNotFoundException("Compilation with id = " + compId + " not found");
         }
         compilationRepository.deleteById(compId);
     }
 
     public CompilationDto update(Long compId, CompilationUpdateRequestDto compilationUpdateRequestDto) {
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new ValidationIdException("Compilation with id = \"" + compId + "\" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Compilation with id = \"" + compId + "\" not found"));
 
         if (compilationUpdateRequestDto.getTitle() != null) {
             compilation.setTitle(compilationUpdateRequestDto.getTitle());
@@ -86,7 +86,7 @@ public class CompilationService {
 
     public CompilationDto getById(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
-                .orElseThrow(() -> new ValidationIdException("Compilation with id = \"" + compId + "\" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Compilation with id = \"" + compId + "\" not found"));
         List<EventShortDto> eventShortDtoList = compilation.getEvents()
                 .stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
         return CompilationMapper.toCompilationDto(compilation, eventShortDtoList);

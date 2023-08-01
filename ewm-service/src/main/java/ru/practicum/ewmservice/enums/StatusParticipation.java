@@ -1,5 +1,8 @@
 package ru.practicum.ewmservice.enums;
 
 public enum StatusParticipation {
-    PENDING, PUBLISHED, CANCELED
+    PENDING,
+    REVIEW,
+    PUBLISHED,
+    CANCELED
 }

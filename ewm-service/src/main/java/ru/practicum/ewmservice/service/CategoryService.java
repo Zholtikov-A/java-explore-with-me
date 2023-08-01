@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmservice.dto.CategoryCreateDto;
 import ru.practicum.ewmservice.dto.CategoryDto;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
+import ru.practicum.ewmservice.exceptions.EntityNotFoundException;
 import ru.practicum.ewmservice.mapper.CategoryMapper;
 import ru.practicum.ewmservice.model.Category;
 import ru.practicum.ewmservice.model.Event;
@@ -53,7 +53,7 @@ public class CategoryService {
 
     private Category checkCategory(Long catId) {
         return categoryRepository.findById(catId)
-                .orElseThrow(() -> new ValidationIdException("Category with id = \"" + catId + "\" not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category with id = \"" + catId + "\" not found"));
     }
 
     private void checkEvent(Long catId) {
