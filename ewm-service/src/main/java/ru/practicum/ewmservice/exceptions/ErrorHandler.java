@@ -116,7 +116,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError EntityNotFoundException(final EntityNotFoundException e) {
+    public ApiError entityNotFoundException(final EntityNotFoundException e) {
         log.warn("EntityNotFoundException: " + e.getMessage());
         return ApiError.builder()
                 .status(HttpStatus.NOT_FOUND)
