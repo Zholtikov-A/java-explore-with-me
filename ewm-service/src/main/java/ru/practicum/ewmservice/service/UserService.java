@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewmservice.dto.UserCreateRequestDto;
 import ru.practicum.ewmservice.dto.UserDto;
-import ru.practicum.ewmservice.exceptions.ValidationIdException;
+import ru.practicum.ewmservice.exceptions.EntityNotFoundException;
 import ru.practicum.ewmservice.mapper.UserMapper;
 import ru.practicum.ewmservice.model.User;
 import ru.practicum.ewmservice.repository.UserRepository;
@@ -40,12 +40,12 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new ValidationIdException("Compilation with id = " + userId + " not found");
+            throw new EntityNotFoundException("Compilation with id = " + userId + " not found");
         }
         userRepository.deleteById(userId);
     }
 
     public User checkUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new ValidationIdException("User with id = " + userId + " not found"));
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User with id = " + userId + " not found"));
     }
 }

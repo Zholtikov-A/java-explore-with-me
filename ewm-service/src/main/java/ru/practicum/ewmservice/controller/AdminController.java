@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.ewmservice.dto.*;
+import ru.practicum.ewmservice.enums.StateAction;
 import ru.practicum.ewmservice.enums.StatusParticipation;
 import ru.practicum.ewmservice.service.CategoryService;
 import ru.practicum.ewmservice.service.CompilationService;
@@ -114,5 +115,26 @@ public class AdminController {
         log.info("Get request to endpoint: PATCH \"admin/compilations/{compId}\" updateCompilation id = {}", compId);
         return compilationService.update(compId, compilationUpdateRequestDto);
     }
+
+    @PostMapping("/{eventId}/moderation")
+    public EventFullDto addModeration(@PathVariable Long eventId,
+                                      @RequestBody @Valid ModerationDto moderationDto,
+                                      @RequestParam(value = "state") StateAction state) {
+        log.info("Get request to endpoint: POST \"admin/{eventId}/moderation\"  getModerationById c eventId = {}", eventId);
+        return eventService.addAnswerModeration(eventId, moderationDto, state);
+    }
+
+    @GetMapping("/moderation")
+    public List<EventShortDto> getEventWaitModeration() {
+        log.info("Get request to endpoint: GET \"admin/moderation\" getEventWaitModeration");
+        return eventService.getWaitModeration();
+    }
+
+    @GetMapping("/moderation/{modId}")
+    public ModerationDto getModerationById(@PathVariable @Positive Long modId) {
+        log.info("Get request to endpoint: GET \"admin/moderation/{modId}\" getModerationById c modId = {}", modId);
+        return eventService.getModerationById(modId);
+    }
+
 
 }
