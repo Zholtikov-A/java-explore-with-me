@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "cb5eb153-0583-4ec6-81a9-6b4fda30a83a",
-		"name": "EWM moderation_enhancement",
+		"_postman_id": "bf1d4333-cf23-4db7-bfbc-5d4a3fb98952",
+		"name": "EWM - moderation enhancement",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27917968"
+		"_exporter_id": "25943288"
 	},
 	"item": [
 		{
@@ -235,7 +235,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"eventId\": 10,\r\n  \"comment\": \"Approved event.\"\r\n}"
+					"raw": "{\r\n  \"eventId\": 10,\r\n  \"comment\": \"Approved.\"\r\n}"
 				},
 				"url": {
 					"raw": "{{baseUrl}}/admin/:eventId/moderation?state=PUBLISH_EVENT",
